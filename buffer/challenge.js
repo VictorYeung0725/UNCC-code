@@ -1,7 +1,8 @@
 //try to allocate exctaly below memory to below raw data
 //0110 1000 0110 1001 0010 0001
 
-const { Buffer } = require('buffer');
+const { Buffer, constants } = require('buffer');
+console.log(constants);
 
 const memoryAllocation = Buffer.alloc(3);
 console.log(memoryAllocation);
