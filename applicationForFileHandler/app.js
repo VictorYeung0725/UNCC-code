@@ -14,28 +14,58 @@ const { Buffer } = require('buffer');
 (async () => {
   const commandFileHandler = await fs.open('./command.txt', 'r');
 
+  //restructure the code with event emitter
+  commandFileHandler.on('change', async () => {
+    console.log(event, 'the file is changed');
+
+    //get the size of the file
+    const size = (await commandFileHandler.stat()).size;
+    //and allocate the buffer with the size of file
+    const buff = Buffer.alloc(size);
+    //the location which we want to filter the position
+    const offset = 0;
+    //how many byte to read
+    const length = buff.byteLength;
+    //the position where start to read the file from
+    const position = 0;
+
+    //we want to read the whole content (from beginning till the end)
+    const content = await commandFileHandler.read(
+      buff,
+      offset,
+      length,
+      position
+    );
+    console.log(content);
+  });
   const watcher = fs.watch('./command.txt');
 
   //here we watch the file changed type to monitor the change
   for await (const event of watcher) {
     console.log(event.eventType);
-    if (event.eventType === 'change') {
-      console.log(event, 'the file is changed');
+    commandFileHandler.emit('change');
+    // if (event.eventType === 'change') {
+    //   console.log(event, 'the file is changed');
 
-      //get the size of the file
-      const size = (await commandFileHandler.stat()).size;
-      const buff = Buffer.alloc(size);
-      const offset = 0;
-      const length = buff.byteLength;
-      const position = 0;
+    //   //get the size of the file
+    //   const size = (await commandFileHandler.stat()).size;
+    //   //and allocate the buffer with the size of file
+    //   const buff = Buffer.alloc(size);
+    //   //the location which we want to filter the position
+    //   const offset = 0;
+    //   //how many byte to read
+    //   const length = buff.byteLength;
+    //   //the position where start to read the file from
+    //   const position = 0;
 
-      const content = await commandFileHandler.read(
-        buff,
-        offset,
-        length,
-        position
-      );
-      console.log(content);
-    }
+    //   //we want to read the whole content (from beginning till the end)
+    //   const content = await commandFileHandler.read(
+    //     buff,
+    //     offset,
+    //     length,
+    //     position
+    //   );
+    //   console.log(content);
+    // }
   }
 })();
