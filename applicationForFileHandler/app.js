@@ -16,30 +16,32 @@ const { Buffer } = require('buffer');
 
   //restructure the code with event emitter
   commandFileHandler.on('change', async () => {
-    console.log(event, 'the file is changed');
+    console.log('the file is changed');
 
     //get the size of the file
     const size = (await commandFileHandler.stat()).size;
     //and allocate the buffer with the size of file
-    const buff = Buffer.alloc(size);
+    const buffer = Buffer.alloc(size);
     //the location which we want to filter the position
     const offset = 0;
     //how many byte to read
-    const length = buff.byteLength;
+    const length = buffer.byteLength;
     //the position where start to read the file from
     const position = 0;
 
     //we want to read the whole content (from beginning till the end)
-    const content = await commandFileHandler.read(
-      buff,
-      offset,
-      length,
-      position
-    );
-    console.log(content);
-  });
-  const watcher = fs.watch('./command.txt');
+    await commandFileHandler.read(buffer, offset, length, position);
+    console.log(buffer.toString('utf-8'));
+    const command = buffer.toString('utf-8');
 
+    //create a file
+    //create a file(path)
+    if (command.includes('create a file')) {
+      //do something
+    }
+  });
+
+  const watcher = fs.watch('./command.txt');
   //here we watch the file changed type to monitor the change
   for await (const event of watcher) {
     console.log(event.eventType);
