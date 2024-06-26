@@ -1,1 +1,1 @@
-create a file /Users/yangqiufeng/Desktop/UNCC-code/newFile1.txt
+rename the file /Users/yangqiufeng/Desktop/UNCC-code/newFile1.txt to /Users/yangqiufeng/Desktop/UNCC-code/newFile2.txt

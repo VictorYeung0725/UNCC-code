@@ -9,9 +9,9 @@ const { Buffer } = require('buffer');
 //here mainly use promise api // only use callback api if the performance is critical
 (async () => {
   const CREATE_FILE = 'create a file';
-  const DELETE_FILE = 'delete a file';
-  const RENAME_FILE = 'rename a file';
-  const ADD_CONTENT_TO_FILE = 'add content to file';
+  const DELETE_FILE = 'delete the file';
+  const RENAME_FILE = 'rename the file';
+  const ADD_CONTENT_TO_FILE = 'add content to the file';
 
   const createFile = async (path) => {
     try {
@@ -39,7 +39,8 @@ const { Buffer } = require('buffer');
   };
 
   const addToFile = async (path, content) => {
-    console.log(`Adding ${content} to this ${path}`);
+    console.log(`Adding to this ${path}`);
+    console.log(`this is the: ${content} `);
   };
 
   const commandFileHandler = await fs.open('./command.txt', 'r');
